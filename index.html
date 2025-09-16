@@ -96,7 +96,7 @@
 
     <script>
         // PASTIKAN URL GOOGLE SCRIPT ANDA SUDAH BENAR DI SINI
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwWN2HPQkddlbXp7WP1dUBfJux-gNNf23LQDc_gKrKowe9RQNcxhbwvk-SjyjXws_wM/exec'; 
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGR1tOUHoEEhvG8AatrxfmLR1Dc2oRnzbBqcfYnSIJuzh4dl5UoiFAl-S8m6SlUzIx/exec'; 
 
         const questions = [
             // ... (soal-soal lengkap ada di sini, sama seperti sebelumnya) ...
@@ -220,7 +220,7 @@
         async function submitToGoogleSheet(score, percentage) {
             const statusEl = document.getElementById('submission-status');
             
-            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbwWN2HPQkddlbXp7WP1dUBfJux-gNNf23LQDc_gKrKowe9RQNcxhbwvk-SjyjXws_wM/exec' || GOOGLE_SCRIPT_URL === '') {
+            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzGR1tOUHoEEhvG8AatrxfmLR1Dc2oRnzbBqcfYnSIJuzh4dl5UoiFAl-S8m6SlUzIx/exec' || GOOGLE_SCRIPT_URL === '') {
                  statusEl.innerHTML = `<span class="text-red-600 font-semibold">Gagal mengirim: URL Google Script belum diatur oleh guru.</span><br>Namun, hasil Anda tetap tercatat di layar ini.`;
                  return;
             }
@@ -254,4 +254,5 @@
     </script>
 </body>
 </html>
+
 
