@@ -9,7 +9,7 @@
     <!-- KaTeX for rendering math equations -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" xintegrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" xintegrity="sha384-cpW21h6ecxGcbe417acAXFyr5kIm/BupakImruo8rIADV5nvG9FNveiANhGwDxpr" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -37,7 +37,7 @@
 
     <div id="main-container" class="container mx-auto p-4 md:p-8 max-w-4xl">
 
-        <!-- Student Info Section -->
+        <!-- Student Info Section (SEHARUSNYA TAMPIL DI AWAL) -->
         <div id="info-section" class="bg-white p-8 rounded-xl shadow-lg text-center">
             <h1 class="text-3xl md:text-4xl font-bold text-blue-600 mb-4">Latihan Soal HOTS: Bilangan Berpangkat</h1>
             <p class="text-gray-600 mb-6">Silakan isi nama dan kelas Anda untuk memulai. Setelah tes dimulai, jangan keluar dari halaman ini.</p>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <!-- Quiz Section (Initially Hidden) -->
+        <!-- Quiz Section (SEHARUSNYA TERSEMBUNYI DI AWAL) -->
         <div id="quiz-section" class="hidden relative">
              <div id="cheat-overlay" class="hidden">
                 <div class="disabled-overlay rounded-xl">
@@ -79,7 +79,7 @@
             </div>
         </div>
         
-        <!-- Result Section (Initially Hidden) -->
+        <!-- Result Section (SEHARUSNYA TERSEMBUNYI DI AWAL) -->
         <div id="result-section" class="hidden bg-white p-8 rounded-xl shadow-lg text-center">
             <h2 class="text-3xl font-bold text-blue-600 mb-4">Hasil Pengerjaan</h2>
             <p class="text-xl mb-2">Nama: <span id="result-name" class="font-semibold"></span></p>
@@ -95,134 +95,12 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+        // PASTIKAN URL GOOGLE SCRIPT ANDA SUDAH BENAR DI SINI
+        const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; 
 
         const questions = [
-            {
-                question: "Sebuah bakteri membelah diri menjadi 2 setiap 15 menit. Jika pada pukul 07.00 terdapat 10 bakteri, berapa banyak bakteri pada pukul 10.00? Nyatakan dalam bentuk pangkat.",
-                options: ["$10 \\times 2^{12}$", "$10 \\times 2^{10}$", "$10 \\times 2^{15}$", "$10 \\times 2^3$"],
-                answer: "$10 \\times 2^{12}$"
-            },
-            {
-                question: "Sebuah kertas dengan tebal $0,01$ cm. Jika kertas tersebut dilipat dua secara terus menerus sebanyak 10 kali, berapakah tebal kertas setelah dilipat? (Gunakan bentuk $a \\times 10^n$)",
-                options: ["$1,024 \\times 10^1$ cm", "$1,024 \\times 10^2$ cm", "$1,024 \\times 10^0$ cm", "$1,024 \\times 10^{-1}$ cm"],
-                answer: "$1,024 \\times 10^1$ cm"
-            },
-            {
-                question: "Volume sebuah kubus adalah $125.000$ cm³. Jika panjang rusuk kubus tersebut diperbesar $2^2$ kali, berapakah volume kubus yang baru?",
-                options: ["$8 \\times 10^6$ cm³", "$6,4 \\times 10^6$ cm³", "$4 \\times 10^6$ cm³", "$3,2 \\times 10^7$ cm³"],
-                answer: "$8 \\times 10^6$ cm³"
-            },
-            {
-                question: "Cahaya bergerak dengan kecepatan $3 \\times 10^8$ m/detik. Sebuah galaksi berada pada jarak $1,5 \\times 10^{21}$ meter dari Bumi. Berapa detik waktu yang dibutuhkan cahaya dari galaksi tersebut untuk sampai ke Bumi?",
-                options: ["$5 \\times 10^{12}$ detik", "$5 \\times 10^{13}$ detik", "$0,5 \\times 10^{12}$ detik", "$2 \\times 10^{29}$ detik"],
-                answer: "$5 \\times 10^{12}$ detik"
-            },
-            {
-                question: "Sebuah virus memiliki ukuran diameter $2^{-7}$ mm. Berapa banyak virus yang dapat berjejer lurus dalam panjang 1 cm?",
-                options: ["$1280$ virus", "$128$ virus", "$2560$ virus", "$640$ virus"],
-                answer: "$1280$ virus"
-            },
-            {
-                question: "Populasi kota A adalah $4 \\times 10^5$ jiwa dan populasi kota B adalah $2,5 \\times 10^6$ jiwa. Berapa kali lipat populasi kota B dibandingkan kota A?",
-                options: ["$6,25$ kali", "$1,6$ kali", "$62,5$ kali", "$0,16$ kali"],
-                answer: "$6,25$ kali"
-            },
-            {
-                question: "Sebuah hard disk memiliki kapasitas $2$ Terabyte. Jika 1 Terabyte = $10^{12}$ byte, dan satu file foto rata-rata berukuran $4$ Megabyte (1 Megabyte = $10^6$ byte), berapa banyak foto yang bisa disimpan? (Nyatakan dalam notasi ilmiah)",
-                options: ["$5 \\times 10^5$ foto", "$5 \\times 10^4$ foto", "$2 \\times 10^6$ foto", "$8 \\times 10^6$ foto"],
-                answer: "$5 \\times 10^5$ foto"
-            },
-            {
-                question: "Sebuah perusahaan startup dinilai memiliki valuasi $8,1 \\times 10^9$ dolar. Tiga tahun kemudian, valuasinya menjadi $2,7 \\times 10^{10}$ dolar. Berapa rasio pertumbuhan valuasi perusahaan tersebut setiap tahunnya jika pertumbuhannya konstan secara eksponensial?",
-                options: ["$(10/3)^{1/3}$", "$10/3$", "$3^{1/3}$", "$3$"],
-                answer: "$(10/3)^{1/3}$"
-            },
-            {
-                question: "Sebuah koloni semut bertambah menjadi $3$ kali lipat setiap 2 hari. Jika pada hari pertama ada $50$ semut, berapa jumlah semut setelah 10 hari?",
-                options: ["$50 \\times 3^5$", "$50 \\times 3^{10}$", "$50 \\times 3^4$", "$50 \\times 3^2$"],
-                answer: "$50 \\times 3^5$"
-            },
-            {
-                question: "Massa planet Jupiter adalah $1,898 \\times 10^{27}$ kg, sedangkan massa Bumi adalah $5,972 \\times 10^{24}$ kg. Berapa perkiraan perbandingan massa Jupiter terhadap Bumi?",
-                options: ["Sekitar $3,18 \\times 10^2$ kali", "Sekitar $3,18 \\times 10^3$ kali", "Sekitar $3,18 \\times 10^1$ kali", "Sekitar $0,318 \\times 10^2$ kali"],
-                answer: "Sekitar $3,18 \\times 10^2$ kali"
-            },
-             {
-                question: "Sebuah zat radioaktif memiliki waktu paruh 10 tahun, artinya massanya menjadi setengahnya setiap 10 tahun. Jika massa awal zat tersebut adalah 800 gram, berapa massanya setelah 40 tahun?",
-                options: ["50 gram", "100 gram", "200 gram", "25 gram"],
-                answer: "50 gram"
-            },
-            {
-                question: "Sebuah bola dijatuhkan dari ketinggian 16 meter. Setiap kali memantul, tingginya menjadi $3/4$ dari tinggi sebelumnya. Berapa ketinggian bola setelah pantulan ke-3?",
-                options: ["$6,75$ meter", "$9$ meter", "$12$ meter", "$5,0625$ meter"],
-                answer: "$6,75$ meter"
-            },
-            {
-                question: "Luas sebuah persegi adalah $2^{10}$ cm². Berapa keliling persegi tersebut?",
-                options: ["$2^7$ cm", "$2^6$ cm", "$2^5$ cm", "$2^8$ cm"],
-                answer: "$2^7$ cm"
-            },
-            {
-                question: "Sebuah dana investasi memberikan keuntungan $100\\%$ (menjadi $2$ kali lipat) setiap 4 tahun. Jika Andi menginvestasikan Rp 10.000.000, berapa nilai investasinya setelah 16 tahun?",
-                options: ["Rp 160.000.000", "Rp 80.000.000", "Rp 320.000.000", "Rp 40.000.000"],
-                answer: "Rp 160.000.000"
-            },
-            {
-                question: "Jika $a = 2$ dan $b = 3$, maka nilai dari $(a^b)^a \\times (b^{-a})^{-b}$ adalah...",
-                options: ["$2^6 \\times 3^6$", "$2^6 \\times 3^{-6}$", "$2^5 \\times 3^5$", "$2^5 \\times 3^{-6}$"],
-                answer: "$2^6 \\times 3^6$"
-            },
-            {
-                question: "Seekor amoeba dapat membelah diri menjadi 3 setiap 20 menit. Jika ada 5 amoeba pada awalnya, berapa banyak amoeba yang akan ada setelah 2 jam?",
-                options: ["$5 \\times 3^6$", "$5 \\times 3^3$", "$5 \\times 3^5$", "$5 \\times 3^{10}$"],
-                answer: "$5 \\times 3^6$"
-            },
-            {
-                question: "Sebuah kebun berbentuk persegi panjang dengan panjang $5 \\times 10^2$ meter dan lebar $2 \\times 10^2$ meter. Berapa luas kebun tersebut dalam notasi ilmiah?",
-                options: ["$1 \\times 10^5$ m²", "$1 \\times 10^4$ m²", "$10 \\times 10^4$ m²", "$7 \\times 10^2$ m²"],
-                answer: "$1 \\times 10^5$ m²"
-            },
-            {
-                question: "Bentuk sederhana dari $\\frac{(x^3 y^{-2} z^5)^2}{x^5 y^{-6} z^8}$ adalah...",
-                options: ["$x y^2 z^2$", "$x^{-1} y^{-2} z^{-2}$", "$x y^{-2} z^2$", "$x^{-1} y^2 z^2$"],
-                answer: "$x y^2 z^2$"
-            },
-            {
-                question: "Sebuah negara memiliki utang sebesar $4,5 \\times 10^{15}$ Rupiah. Jika jumlah penduduk negara tersebut adalah $2,5 \\times 10^8$ jiwa, berapa utang yang ditanggung oleh setiap penduduk?",
-                options: ["$1,8 \\times 10^7$ Rupiah", "$1,8 \\times 10^6$ Rupiah", "$2,2 \\times 10^7$ Rupiah", "$2,2 \\times 10^6$ Rupiah"],
-                answer: "$1,8 \\times 10^7$ Rupiah"
-            },
-            {
-                question: "Nilai dari $(27^{2/3} + 16^{3/4}) \\times 100^{1/2}$ adalah...",
-                options: ["170", "150", "90", "80"],
-                answer: "170"
-            },
-            {
-                question: "Sebuah bola salju menggelinding dan volumenya bertambah $2$ kali lipat setiap 5 detik. Jika volume awalnya $3$ cm³, berapa volumenya setelah setengah menit?",
-                options: ["$192$ cm³", "$96$ cm³", "$384$ cm³", "$64$ cm³"],
-                answer: "$192$ cm³"
-            },
-            {
-                question: "Jarak rata-rata Bumi ke Bulan adalah $3,84 \\times 10^5$ km. Jika sebuah pesawat antariksa bergerak dengan kecepatan $1,6 \\times 10^4$ km/jam, berapa jam waktu yang dibutuhkan untuk sampai ke Bulan?",
-                options: ["24 jam", "2,4 jam", "48 jam", "12 jam"],
-                answer: "24 jam"
-            },
-            {
-                question: "Sebuah penampungan air berbentuk kubus dapat menampung $6,4 \\times 10^7$ cm³ air. Berapa panjang rusuk penampungan tersebut dalam meter?",
-                options: ["4 meter", "0,4 meter", "1,6 meter", "8 meter"],
-                answer: "4 meter"
-            },
-            {
-                question: "Bentuk sederhana dari $\\sqrt{75} + 2\\sqrt{12} - \\sqrt{27}$ adalah...",
-                options: ["$6\\sqrt{3}$", "$5\\sqrt{3}$", "$7\\sqrt{3}$", "$4\\sqrt{3}$"],
-                answer: "$6\\sqrt{3}$"
-            },
-            {
-                question: "Jika $8^{x-1} = 32$, maka nilai $x$ adalah...",
-                options: ["$8/3$", "$3/8$", "$5/3$", "$3/5$"],
-                answer: "$8/3$"
-            }
+            // ... (soal-soal lengkap ada di sini, sama seperti sebelumnya) ...
+            { question: "Sebuah bakteri membelah diri menjadi 2 setiap 15 menit. Jika pada pukul 07.00 terdapat 10 bakteri, berapa banyak bakteri pada pukul 10.00? Nyatakan dalam bentuk pangkat.", options: ["$10 \\times 2^{12}$", "$10 \\times 2^{10}$", "$10 \\times 2^{15}$", "$10 \\times 2^3$"], answer: "$10 \\times 2^{12}$" }, { question: "Sebuah kertas dengan tebal $0,01$ cm. Jika kertas tersebut dilipat dua secara terus menerus sebanyak 10 kali, berapakah tebal kertas setelah dilipat? (Gunakan bentuk $a \\times 10^n$)", options: ["$1,024 \\times 10^1$ cm", "$1,024 \\times 10^2$ cm", "$1,024 \\times 10^0$ cm", "$1,024 \\times 10^{-1}$ cm"], answer: "$1,024 \\times 10^1$ cm" }, { question: "Volume sebuah kubus adalah $125.000$ cm³. Jika panjang rusuk kubus tersebut diperbesar $2^2$ kali, berapakah volume kubus yang baru?", options: ["$8 \\times 10^6$ cm³", "$6,4 \\times 10^6$ cm³", "$4 \\times 10^6$ cm³", "$3,2 \\times 10^7$ cm³"], answer: "$8 \\times 10^6$ cm³" }, { question: "Cahaya bergerak dengan kecepatan $3 \\times 10^8$ m/detik. Sebuah galaksi berada pada jarak $1,5 \\times 10^{21}$ meter dari Bumi. Berapa detik waktu yang dibutuhkan cahaya dari galaksi tersebut untuk sampai ke Bumi?", options: ["$5 \\times 10^{12}$ detik", "$5 \\times 10^{13}$ detik", "$0,5 \\times 10^{12}$ detik", "$2 \\times 10^{29}$ detik"], answer: "$5 \\times 10^{12}$ detik" }, { question: "Sebuah virus memiliki ukuran diameter $2^{-7}$ mm. Berapa banyak virus yang dapat berjejer lurus dalam panjang 1 cm?", options: ["$1280$ virus", "$128$ virus", "$2560$ virus", "$640$ virus"], answer: "$1280$ virus" }, { question: "Populasi kota A adalah $4 \\times 10^5$ jiwa dan populasi kota B adalah $2,5 \\times 10^6$ jiwa. Berapa kali lipat populasi kota B dibandingkan kota A?", options: ["$6,25$ kali", "$1,6$ kali", "$62,5$ kali", "$0,16$ kali"], answer: "$6,25$ kali" }, { question: "Sebuah hard disk memiliki kapasitas $2$ Terabyte. Jika 1 Terabyte = $10^{12}$ byte, dan satu file foto rata-rata berukuran $4$ Megabyte (1 Megabyte = $10^6$ byte), berapa banyak foto yang bisa disimpan? (Nyatakan dalam notasi ilmiah)", options: ["$5 \\times 10^5$ foto", "$5 \\times 10^4$ foto", "$2 \\times 10^6$ foto", "$8 \\times 10^6$ foto"], answer: "$5 \\times 10^5$ foto" }, { question: "Sebuah perusahaan startup dinilai memiliki valuasi $8,1 \\times 10^9$ dolar. Tiga tahun kemudian, valuasinya menjadi $2,7 \\times 10^{10}$ dolar. Berapa rasio pertumbuhan valuasi perusahaan tersebut setiap tahunnya jika pertumbuhannya konstan secara eksponensial?", options: ["$(10/3)^{1/3}$", "$10/3$", "$3^{1/3}$", "$3$"], answer: "$(10/3)^{1/3}$" }, { question: "Sebuah koloni semut bertambah menjadi $3$ kali lipat setiap 2 hari. Jika pada hari pertama ada $50$ semut, berapa jumlah semut setelah 10 hari?", options: ["$50 \\times 3^5$", "$50 \\times 3^{10}$", "$50 \\times 3^4$", "$50 \\times 3^2$"], answer: "$50 \\times 3^5$" }, { question: "Massa planet Jupiter adalah $1,898 \\times 10^{27}$ kg, sedangkan massa Bumi adalah $5,972 \\times 10^{24}$ kg. Berapa perkiraan perbandingan massa Jupiter terhadap Bumi?", options: ["Sekitar $3,18 \\times 10^2$ kali", "Sekitar $3,18 \\times 10^3$ kali", "Sekitar $3,18 \\times 10^1$ kali", "Sekitar $0,318 \\times 10^2$ kali"], answer: "Sekitar $3,18 \\times 10^2$ kali" }, { question: "Sebuah zat radioaktif memiliki waktu paruh 10 tahun, artinya massanya menjadi setengahnya setiap 10 tahun. Jika massa awal zat tersebut adalah 800 gram, berapa massanya setelah 40 tahun?", options: ["50 gram", "100 gram", "200 gram", "25 gram"], answer: "50 gram" }, { question: "Sebuah bola dijatuhkan dari ketinggian 16 meter. Setiap kali memantul, tingginya menjadi $3/4$ dari tinggi sebelumnya. Berapa ketinggian bola setelah pantulan ke-3?", options: ["$6,75$ meter", "$9$ meter", "$12$ meter", "$5,0625$ meter"], answer: "$6,75$ meter" }, { question: "Luas sebuah persegi adalah $2^{10}$ cm². Berapa keliling persegi tersebut?", options: ["$2^7$ cm", "$2^6$ cm", "$2^5$ cm", "$2^8$ cm"], answer: "$2^7$ cm" }, { question: "Sebuah dana investasi memberikan keuntungan $100\\%$ (menjadi $2$ kali lipat) setiap 4 tahun. Jika Andi menginvestasikan Rp 10.000.000, berapa nilai investasinya setelah 16 tahun?", options: ["Rp 160.000.000", "Rp 80.000.000", "Rp 320.000.000", "Rp 40.000.000"], answer: "Rp 160.000.000" }, { question: "Jika $a = 2$ dan $b = 3$, maka nilai dari $(a^b)^a \\times (b^{-a})^{-b}$ adalah...", options: ["$2^6 \\times 3^6$", "$2^6 \\times 3^{-6}$", "$2^5 \\times 3^5$", "$2^5 \\times 3^{-6}$"], answer: "$2^6 \\times 3^6$" }, { question: "Seekor amoeba dapat membelah diri menjadi 3 setiap 20 menit. Jika ada 5 amoeba pada awalnya, berapa banyak amoeba yang akan ada setelah 2 jam?", options: ["$5 \\times 3^6$", "$5 \\times 3^3$", "$5 \\times 3^5$", "$5 \\times 3^{10}$"], answer: "$5 \\times 3^6$" }, { question: "Sebuah kebun berbentuk persegi panjang dengan panjang $5 \\times 10^2$ meter dan lebar $2 \\times 10^2$ meter. Berapa luas kebun tersebut dalam notasi ilmiah?", options: ["$1 \\times 10^5$ m²", "$1 \\times 10^4$ m²", "$10 \\times 10^4$ m²", "$7 \\times 10^2$ m²"], answer: "$1 \\times 10^5$ m²" }, { question: "Bentuk sederhana dari $\\frac{(x^3 y^{-2} z^5)^2}{x^5 y^{-6} z^8}$ adalah...", options: ["$x y^2 z^2$", "$x^{-1} y^{-2} z^{-2}$", "$x y^{-2} z^2$", "$x^{-1} y^2 z^2$"], answer: "$x y^2 z^2$" }, { question: "Sebuah negara memiliki utang sebesar $4,5 \\times 10^{15}$ Rupiah. Jika jumlah penduduk negara tersebut adalah $2,5 \\times 10^8$ jiwa, berapa utang yang ditanggung oleh setiap penduduk?", options: ["$1,8 \\times 10^7$ Rupiah", "$1,8 \\times 10^6$ Rupiah", "$2,2 \\times 10^7$ Rupiah", "$2,2 \\times 10^6$ Rupiah"], answer: "$1,8 \\times 10^7$ Rupiah" }, { question: "Nilai dari $(27^{2/3} + 16^{3/4}) \\times 100^{1/2}$ adalah...", options: ["170", "150", "90", "80"], answer: "170" }, { question: "Sebuah bola salju menggelinding dan volumenya bertambah $2$ kali lipat setiap 5 detik. Jika volume awalnya $3$ cm³, berapa volumenya setelah setengah menit?", options: ["$192$ cm³", "$96$ cm³", "$384$ cm³", "$64$ cm³"], answer: "$192$ cm³" }, { question: "Jarak rata-rata Bumi ke Bulan adalah $3,84 \\times 10^5$ km. Jika sebuah pesawat antariksa bergerak dengan kecepatan $1,6 \\times 10^4$ km/jam, berapa jam waktu yang dibutuhkan untuk sampai ke Bulan?", options: ["24 jam", "2,4 jam", "48 jam", "12 jam"], answer: "24 jam" }, { question: "Sebuah penampungan air berbentuk kubus dapat menampung $6,4 \\times 10^7$ cm³ air. Berapa panjang rusuk penampungan tersebut dalam meter?", options: ["4 meter", "0,4 meter", "1,6 meter", "8 meter"], answer: "4 meter" }, { question: "Bentuk sederhana dari $\\sqrt{75} + 2\\sqrt{12} - \\sqrt{27}$ adalah...", options: ["$6\\sqrt{3}$", "$5\\sqrt{3}$", "$7\\sqrt{3}$", "$4\\sqrt{3}$"], answer: "$6\\sqrt{3}$" }, { question: "Jika $8^{x-1} = 32$, maka nilai $x$ adalah...", options: ["$8/3$", "$3/8$", "$5/3$", "$3/5$"], answer: "$8/3$" }
         ];
 
 
@@ -342,7 +220,7 @@
         async function submitToGoogleSheet(score, percentage) {
             const statusEl = document.getElementById('submission-status');
             
-            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbwWN2HPQkddlbXp7WP1dUBfJux-gNNf23LQDc_gKrKowe9RQNcxhbwvk-SjyjXws_wM/exec') {
+            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbwWN2HPQkddlbXp7WP1dUBfJux-gNNf23LQDc_gKrKowe9RQNcxhbwvk-SjyjXws_wM/exec' || GOOGLE_SCRIPT_URL === '') {
                  statusEl.innerHTML = `<span class="text-red-600 font-semibold">Gagal mengirim: URL Google Script belum diatur oleh guru.</span><br>Namun, hasil Anda tetap tercatat di layar ini.`;
                  return;
             }
@@ -359,23 +237,21 @@
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Penting untuk Google Script
-                    cache: 'no-cache',
+                    mode: 'no-cors',
+                    body: JSON.stringify(data),
                     headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    redirect: 'follow',
-                    body: JSON.stringify(data)
+                      'Content-Type': 'application/json'
+                    }
                 });
                 statusEl.textContent = 'Hasil Anda telah berhasil dikirim. Terima kasih!';
                 statusEl.classList.remove('text-gray-600');
                 statusEl.classList.add('text-green-600', 'font-semibold');
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error submitting to Google Sheet:', error);
                 statusEl.innerHTML = `<span class="text-red-600 font-semibold">Terjadi kesalahan saat mengirim hasil.</span><br>Silakan screenshot halaman ini dan kirimkan ke guru Anda.`;
             }
         }
-        
     </script>
 </body>
 </html>
+
